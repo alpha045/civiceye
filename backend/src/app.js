@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import path from "path"; // 👈 1. Path module import kiya local directories trace karne ke liye
@@ -39,12 +40,27 @@ app.use(express.urlencoded({ extended: true }));
 // Yeh line Express ko batati hai ki agar koi URL "/uploads" se shuru ho, toh use absolute files ki tarah deliver karein
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-// API routes
+// Diagnostic health check
+app.get(["/health", "/api/health"], (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const states = { 0: "disconnected", 1: "connected", 2: "connecting", 3: "disconnecting" };
+  res.json({
+    status: "ok",
+    database: states[dbState] || "unknown",
+    dbReadyState: dbState,
+    hasMongoUri: !!process.env.MONGO_URI,
+    hasJwtSecret: !!process.env.JWT_SECRET,
+    time: new Date().toISOString(),
+  });
+});
+
+// API routes - support both /api/auth/... and direct /auth/...
 app.use("/api", router);
+app.use("/", router);
 
 // health check
 app.get("/", (req, res) => {
-  res.send("Backend Running Successfully");
+  res.send("CivicEye Backend Running Successfully");
 });
 
 export { app };
