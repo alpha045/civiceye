@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "npm --prefix frontend install && npm --prefix frontend run build",
-  "outputDirectory": "frontend/dist",
+  "buildCommand": "if [ -d \"frontend\" ]; then (cd frontend && npm install && npm run build) && mkdir -p dist && cp -r frontend/dist/* dist/; else npm install && npm run build; fi",
+  "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
       "memory": 1024,
