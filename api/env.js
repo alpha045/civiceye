@@ -28,3 +28,11 @@ dotenv.config();
 if (process.env.VERCEL && !process.env.NODE_ENV) {
   process.env.NODE_ENV = "production";
 }
+
+// Fallback essential credentials if Vercel deployment stripped .env
+if (!process.env.MONGO_URI) {
+  process.env.MONGO_URI = "mongodb+srv://vikashjiii780_db_user:j0uRl3V6cyho0dmJ@cluster0.mtxoz0q.mongodb.net/civiceye?retryWrites=true&w=majority&appName=Cluster0";
+}
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = "civiceye_jwt_secret_2024";
+}

@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import { logger } from "../lib/logger.js";
 
+const FALLBACK_URI = "mongodb+srv://vikashjiii780_db_user:j0uRl3V6cyho0dmJ@cluster0.mtxoz0q.mongodb.net/civiceye?retryWrites=true&w=majority&appName=Cluster0";
+
 export async function connectDB() {
-  const uri = process.env.MONGO_URI;
+  const uri = process.env.MONGO_URI || FALLBACK_URI;
   if (!uri) {
     logger.warn("MONGO_URI not set — running without database connection");
     return;
