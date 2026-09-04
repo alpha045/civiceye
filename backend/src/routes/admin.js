@@ -1,4 +1,4 @@
-import { io } from "../index.js";
+import { io } from "../lib/socket.js";
 import Notification from "../models/Notification.js";
 
 import { Router } from "express";

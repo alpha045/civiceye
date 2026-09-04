@@ -7,8 +7,9 @@ import { ArrowLeft, User, MapPin, Building2, CheckCircle, AlertCircle } from "lu
 const STATUSES = ["Pending", "Under Review", "In Progress", "Resolved", "Rejected"];
 const priorityColors = { Low: "bg-green-100 text-green-700", Medium: "bg-yellow-100 text-yellow-700", High: "bg-orange-100 text-orange-700", Urgent: "bg-red-100 text-red-700" };
 
-// 🎯 FIXED: Port ko 5000 se badal kar 5001 kiya jo aapka active backend port h
-const BACKEND_URL = "http://localhost:5001"; 
+const BACKEND_URL = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "")
+  : (import.meta.env.DEV ? "http://localhost:5001" : ""); 
 
 export default function ComplaintDetails() {
   const { id } = useParams();

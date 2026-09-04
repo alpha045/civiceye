@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, clearError } from "../store/slices/authSlice.js";
 import { Eye, EyeOff, Shield, AlertCircle, KeyRound, ArrowLeft, ShieldCheck, Lock, Mail } from "lucide-react";
-import axios from "axios"; // 🎯 API requests trigger karne ke liye zaroori h
+import api from "../utils/api.js";
 
 export default function Login() {
   // --- Existing States ---
@@ -51,7 +51,7 @@ export default function Login() {
     setForgotError("");
     setForgotMessage("");
     try {
-      const res = await axios.post("http://localhost:5001/api/auth/forgot-password", { 
+      const res = await api.post("/auth/forgot-password", { 
         email: forgotEmail 
       });
       setForgotMessage(res.data.message);
@@ -70,7 +70,7 @@ export default function Login() {
     setForgotError("");
     setForgotMessage("");
     try {
-      const res = await axios.post("http://localhost:5001/api/auth/reset-password", {
+      const res = await api.post("/auth/reset-password", {
         email: forgotEmail,
         otp: forgotOtp,
         newPassword: forgotNewPassword,
