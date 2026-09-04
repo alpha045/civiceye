@@ -8,6 +8,7 @@
     "dev:backend": "npm --prefix backend run dev",
     "build": "if [ -d \"frontend\" ]; then (cd frontend && npm install && npm run build) && mkdir -p dist && cp -r frontend/dist/* dist/; else npm install && npm run build; fi",
     "backend:start": "npm --prefix backend run start",
+    "env:sync": "node scripts/sync-env.js",
     "deploy": "npx vercel --prod"
   },
   "dependencies": {
